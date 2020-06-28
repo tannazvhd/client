@@ -47,8 +47,10 @@ export default class GetPosts extends Component {
           "id": e.$oid
         } 
       }).then((response) => {
-        console.log(response.data);
-        // console.log(this.state.idLikedPost);
+          console.log(response.data);
+          // console.log(this.state.idLikedPost);
+          this.getAllPost();
+
 
       });        
     } 
@@ -62,8 +64,10 @@ export default class GetPosts extends Component {
             "id": e.$oid
           } 
         }).then((response) => {
-          console.log(response.data);
-          // console.log(this.state.idDislikedPost);
+            console.log(response.data);
+            // console.log(this.state.idDislikedPost);
+            this.getAllPost();
+
 
         });
 
@@ -124,10 +128,20 @@ export default class GetPosts extends Component {
                     <h2 className="text-left ml-3">{posts.title}</h2>
                   </div>
                   <div className="col-sm-1">
+                    <h6 className="ml-3" style={{"color": "darkgrey"}}>
+                      {posts.like}
+                    </h6>
+                  </div>
+                  <div className="col-sm-1">
                     <img src={like} className="like" title="like" onClick={()=>this.plusLike(posts._id)}/>
                   </div>
                   <div className="col-sm-1">
                     <img src={dislike} className="dislike" title="dislike" onClick={()=>this.plusDisLike(posts._id)}/>
+                  </div>
+                  <div className="col-sm-1">
+                    <h6 style={{"color": "darkgrey"}}>
+                      {posts.dislike}
+                    </h6>
                   </div>
                 </div>
                 <p className=" text-left ml-3" style={{"word-wrap": "break-word"}} >{posts.category}</p>
