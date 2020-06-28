@@ -23,11 +23,51 @@ export default class GetPosts extends Component {
            'image':'images/Propic1.png',
            'file':'',
            //'created':'',
-            posts:[]
+            posts:[],
+            'like':'',
+            'dislike':'',
+            'idLikedPost':'',
+            'idDislikedPost':''
+        
+
         }
         this.getFile=this.getFile.bind(this)
         this.getFile=this.displayBlogPost.bind(this)
-    }
+
+      }
+
+
+
+    plusLike = (e) => {
+
+      axios({
+        url: 'http://localhost:3000/plusLike', 
+        method: 'POST',
+        data:{
+          "id": e.$oid
+        } 
+      }).then((response) => {
+        console.log(response.data);
+        // console.log(this.state.idLikedPost);
+
+      });        
+    } 
+
+    plusDisLike = (e) => {
+
+        axios({
+          url: 'http://localhost:3000/plusDislike', 
+          method: 'POST',
+          data:{
+            "id": e.$oid
+          } 
+        }).then((response) => {
+          console.log(response.data);
+          // console.log(this.state.idDislikedPost);
+
+        });
+
+    } 
 
         componentDidMount () {
             const token = localStorage.usertoken
@@ -40,8 +80,7 @@ export default class GetPosts extends Component {
         componentDidMount = ()=>{
           this.getAllPost();
         }
-     
-       
+            
 
         getAllPost = () => {
             axios.get('http://localhost:3000/users/posts')
@@ -54,6 +93,8 @@ export default class GetPosts extends Component {
               alert('Error retrieving data!!');
           });
         }
+
+
 
     
 
@@ -83,10 +124,10 @@ export default class GetPosts extends Component {
                     <h2 className="text-left ml-3">{posts.title}</h2>
                   </div>
                   <div className="col-sm-1">
-                    <img src={like} className="like" title="like"/>
+                    <img src={like} className="like" title="like" onClick={()=>this.plusLike(posts._id)}/>
                   </div>
                   <div className="col-sm-1">
-                    <img src={dislike} className="dislike" title="dislike"/>
+                    <img src={dislike} className="dislike" title="dislike" onClick={()=>this.plusDisLike(posts._id)}/>
                   </div>
                 </div>
                 <p className=" text-left ml-3" style={{"word-wrap": "break-word"}} >{posts.category}</p>
@@ -153,6 +194,8 @@ export default class GetPosts extends Component {
 
 
   }
+
+ 
 
 
 
